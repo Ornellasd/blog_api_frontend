@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <h1>Message Get Test</h1>
+  <div id="message-container"></div>
+  <h1>Message Post Test</h1>
+  <form action="http://localhost:3002/messages" method="post">
+    <label for="title">Title</label>
+    <input name="title" type="text" />
+    <label for="text">Text</label>
+    <input name="text" placeholder="text" type="text" />
+    <button>Submit</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
