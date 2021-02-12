@@ -4,30 +4,32 @@ let messageContainer = document.querySelector('#message-container');
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
   const data = await response.json();
-  console.log(data);
 
+  displayMessages(data);
+}
+
+const displayMessages = (data) => {
   data.forEach(obj => {
-    messageContainer.append(obj['id']);
-    messageContainer.append(obj['text']);
+    const div = document.createElement('div');
+    const title = document.createElement('p');
+    const messageText = document.createElement('p');
+
+    div.classList += 'nes-container with-title';
+    title.classList += 'title';
+
+    title.textContent = obj['title'];
+    messageText.textContent = obj['text'];
+
+    div.appendChild(title);
+    div.appendChild(messageText);
+    messageContainer.appendChild(div);
+
+    console.log(obj);
   });
 }
-/*
-function handleSubmit(event) {
-  //event.preventDefault();
-
-  const data = new FormData(event.target);
-
-  //const value = data.get('post-title');
-  const value = Object.fromEntries(data.entries());
-
-  console.log({ value });
-}
-*/
-
-
 
 const postForm = (body) => {
-  return fetch('http://localhost:3000/', {
+  return fetch('http://localhost:3000/message/post', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -43,6 +45,5 @@ const handleSubmit = (e) => {
   postForm(body);
 }
 
-
+fetchMessages('http://localhost:3000/messages');
 messageForm.addEventListener('submit', handleSubmit);
-//fetchMessages('http://localhost:3002/messages');
