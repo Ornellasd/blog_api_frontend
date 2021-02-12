@@ -6,31 +6,31 @@
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
   <style>
-    font-family: 'Press Start 2P', cursive;
+    {
+      font-family: 'Press Start 2P', cursive;
+    }
   </style>
 </head>
 <body>
   <h1>Message Get Test</h1>
-  <div id="message-container"></div>
-
+  
   <div class="container">
     <section class="nes-container with-title">
       <h3 class="title">Post Message</h3>
-      <form>
+      <form id="message-form">
         <div class="nes-field">
-          <label for="title">Title:</label>
-          <input name="title" type="test" class="nes-input" />
+          <label for="message-title">Title:</label>
+          <input name="message-title" type="text" class="nes-input" />
         </div>
         <div class="nes-field">
           <label for="text">Text:</label>
-          <textarea id="post-text" class="nes-textarea"></textarea>
+          <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
         </div>
-        <button type="button" class="nes-btn is-success" style="margin-top: 10px;">Submit</button>
+        <button type="submit" class="nes-btn is-success" id="message-message-btn" style="margin-top: 10px;">Submit</button>
       </form>
-    </section>
+    </section>`
   </div>
   
-
   <script src="script.js"></script>
 </body>
 </html>
