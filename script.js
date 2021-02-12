@@ -11,9 +11,9 @@ async function fetchMessages(messagesEndpoint) {
     messageContainer.append(obj['text']);
   });
 }
-
+/*
 function handleSubmit(event) {
-  event.preventDefault();
+  //event.preventDefault();
 
   const data = new FormData(event.target);
 
@@ -22,6 +22,27 @@ function handleSubmit(event) {
 
   console.log({ value });
 }
+*/
+
+
+
+const postForm = (body) => {
+  return fetch('http://localhost:3000/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body
+  })
+}
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const body = JSON.stringify(Object.fromEntries(new FormData(e.target)));
+
+  postForm(body);
+}
+
 
 messageForm.addEventListener('submit', handleSubmit);
 //fetchMessages('http://localhost:3002/messages');
