@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="UTF-8">
     <title></title>
@@ -10,27 +9,24 @@
   </head>
 
   <body>
-    <button id="modal-btn">New Post </button>
-    <div id="messageModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="message-form">
-          <div class="nes-field">
-            <label for="message-user">Username:</label>
-            <input name="message-user" type="text" class="nes-input" />
-          </div>
-          <div class="nes-field">
-            <label for="message-title">Title:</label>
-            <input name="message-title" type="text" class="nes-input" />
-          </div>
-          <div class="nes-field">
-            <label for="text">Text:</label>
-            <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
-          </div>
-          <button type="submit" class="nes-btn is-success" id="message-btn">Submit</button>
-        </form>
-      </div>
-    </div>
+    <button id="new-message-modal-btn" class="nes-btn is-success" onclick="openNewMessageModal()">New Post</button>
+    <dialog id="new-message-form">
+      <form id="message-form">
+        <div class="nes-field">
+          <label for="message-user">Username:</label>
+          <input name="message-user" type="text" class="nes-input" />
+        </div>
+        <div class="nes-field">
+          <label for="message-title">Title:</label>
+          <input name="message-title" type="text" class="nes-input" />
+        </div>
+        <div class="nes-field">
+          <label for="text">Text:</label>
+          <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
+        </div>
+        <button type="submit" class="nes-btn is-primary" id="message-btn">Submit</button>
+      </form>
+    </dialog>
 
     <h1>Message Get Test</h1>
     <div class="container" id="message-container"></div>

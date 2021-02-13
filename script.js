@@ -1,12 +1,10 @@
 const messageForm = document.querySelector('#message-form');
-let messageContainer = document.querySelector('#message-container');
-const messageModal = document.querySelector('#messageModal');
-const modalBtn = document.querySelector('#modal-btn');
-const span = document.querySelector('.close')[0];
 
-modalBtn.addEventListener('click', () => {
-  messageModal.style.display = 'block'
-});
+let messageContainer = document.querySelector('#message-container');
+
+function openNewMessageModal() { 
+  document.querySelector('#new-message-form').showModal(); 
+} 
 
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
