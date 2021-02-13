@@ -1,45 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
-  <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
-  <style>
-    body {
-      font-family: 'Press Start 2P', cursive;
-    }
-    .message-box {
-      margin-bottom: 10px;
-    }
 
-  </style>
-</head>
-<body>
-  <h1>Message Get Test</h1>
-  <div class="container" id="message-container"></div>
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
+    <style>
+      body {
+        font-family: 'Press Start 2P', cursive;
+      }
 
-  <div class="container">
-    <section class="nes-container with-title">
-      <h3 class="title">Post Message</h3>
-      <form id="message-form">
-        <div class="nes-field">
-          <label for="message-user">Username:</label>
-          <input name="message-user" type="text" class="nes-input" />
-        </div>
-        <div class="nes-field">
-          <label for="message-title">Title:</label>
-          <input name="message-title" type="text" class="nes-input" />
-        </div>
-        <div class="nes-field">
-          <label for="text">Text:</label>
-          <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
-        </div>
-        <button type="submit" class="nes-btn is-success" id="message-message-btn" style="margin-top: 10px;">Submit</button>
-      </form>
-    </section>`
-  </div>
-  
-  <script src="script.js"></script>
-</body>
+      .message-box {
+        margin-bottom: 10px;
+      }
+
+      .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <button id="modal-btn">New Post </button>
+    <div id="messageModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form id="message-form">
+          <div class="nes-field">
+            <label for="message-user">Username:</label>
+            <input name="message-user" type="text" class="nes-input" />
+          </div>
+          <div class="nes-field">
+            <label for="message-title">Title:</label>
+            <input name="message-title" type="text" class="nes-input" />
+          </div>
+          <div class="nes-field">
+            <label for="text">Text:</label>
+            <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
+          </div>
+          <button type="submit" class="nes-btn is-success" id="message-message-btn" style="margin-top: 10px;">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <h1>Message Get Test</h1>
+    <div class="container" id="message-container"></div>
+    <script src="script.js"></script>
+  </body>
+
 </html>
