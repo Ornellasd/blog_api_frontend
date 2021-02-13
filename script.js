@@ -14,7 +14,7 @@ const displayMessages = (data) => {
     const title = document.createElement('p');
     const messageText = document.createElement('p');
 
-    div.classList += 'nes-container with-title';
+    div.classList += 'nes-container with-title message-box';
     title.classList += 'title';
 
     title.textContent = obj['title'];
