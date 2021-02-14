@@ -12,12 +12,15 @@ async function fetchMessages(messagesEndpoint) {
 }
 
 const displayMessages = (data) => {
+  let messageNum = 1;
+
   data.forEach(obj => {
     const messageDiv = document.createElement('div');
     const title = document.createElement('p');
     const messageText = document.createElement('p');
  
     messageDiv.classList += 'nes-container with-title message-box';
+    messageDiv.id = `message-${messageNum}`;
     title.classList += 'title';
 
     title.textContent = obj['title'];
@@ -27,18 +30,24 @@ const displayMessages = (data) => {
     messageDiv.appendChild(title);
     messageDiv.appendChild(messageText);
    
-    createDeleteMessageBtnContainer(messageDiv);
+    createDeleteMessageBtnContainer(messageDiv, messageNum);
     messagesContainer.appendChild(messageDiv);
+
+    messageNum++;
   });
 }
 
-const createDeleteMessageBtnContainer = (messageDiv) => {
+const createDeleteMessageBtnContainer = (messageDiv, messageNum) => {
   const deleteBtnContainer = document.createElement('div');
+  const confirmBtnsContainer = document.createElement('div');
   const deleteBtn = document.createElement('a');
   const confirmBtn = document.createElement('a');
   const cancelBtn = document.createElement('a');
 
   deleteBtnContainer.classList = 'delete-btn-container';
+  confirmBtnsContainer.classList += 'confirm-container';
+  confirmBtnsContainer.id = `confirm-${messageNum}`;
+  //confirmBtnsContainer.style.display = 'none';
   deleteBtn.classList += 'nes-btn is-error is-small';
   deleteBtn.textContent = 'Delete';
   deleteBtn.href = `http://localhost:3000/id/delete`;
@@ -47,10 +56,16 @@ const createDeleteMessageBtnContainer = (messageDiv) => {
   cancelBtn.classList += 'nes-btn is-error is-small';
   cancelBtn.textContent = 'No';
 
+  confirmBtnsContainer.appendChild(confirmBtn);
+  confirmBtnsContainer.appendChild(cancelBtn);
+
   deleteBtnContainer.appendChild(deleteBtn);
-  deleteBtnContainer.appendChild(confirmBtn);
-  deleteBtnContainer.appendChild(cancelBtn);
+  deleteBtnContainer.appendChild(confirmBtnsContainer);
   messageDiv.appendChild(deleteBtnContainer);  
+}
+
+const deleteBtnContainerToggle = () => {
+
 }
 
 const deleteMessage = (id) => {
