@@ -8,7 +8,7 @@ async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
   const data = await response.json();
 
-  displayMessages(data);
+  return data;
 }
 
 const displayMessages = (data) => {
@@ -16,7 +16,7 @@ const displayMessages = (data) => {
     const div = document.createElement('div');
     const title = document.createElement('p');
     const messageText = document.createElement('p');
-    const deleteBtn = document.createElement('button');
+    const deleteBtn = document.createElement('a');
 
     div.classList += 'nes-container with-title message-box';
     title.classList += 'title';
@@ -25,14 +25,24 @@ const displayMessages = (data) => {
     title.textContent = obj['title'];
     messageText.textContent = obj['text'];
     deleteBtn.textContent = 'Delete';
+    deleteBtn.href = `http://localhost:3000/message/${obj._id}/delete`;
 
+    // change to only append new objects if they dont already exist or just redo messageContainer each time
     div.appendChild(title);
     div.appendChild(messageText);
     div.appendChild(deleteBtn);
     messageContainer.appendChild(div);
 
+    deleteBtn.addEventListener('click', () => {
+      console.log('delete ' + obj._id);
+    });
+
     console.log(obj);
   });
+}
+
+const deleteMessage = () => {
+
 }
 
 const postForm = (body) => {
@@ -51,6 +61,10 @@ const handleSubmit = (e) => {
 
   messageModal.close();
   postForm(body);
+  
+  fetchMessages('http://localhost:3000/messages').then(data => {
+    displayMessages(data);
+  });
 }
 
 messageForm.addEventListener('submit', handleSubmit);
@@ -63,4 +77,6 @@ closeModalBtn.addEventListener('click', () => {
   messageModal.close();
 });
 
-fetchMessages('http://localhost:3000/messages');
+fetchMessages('http://localhost:3000/messages').then(data => {
+  displayMessages(data);
+});
