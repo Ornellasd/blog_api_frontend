@@ -8,9 +8,13 @@ async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
   const data = await response.json();
 
-  displayMessages(data);
+  return data;
 }
-
+/*
+const displayMessages = (data) => {
+  console.log(data);
+}
+*/
 const displayMessages = (data) => {
   data.forEach(obj => {
     const div = document.createElement('div');
@@ -26,6 +30,7 @@ const displayMessages = (data) => {
     messageText.textContent = obj['text'];
     deleteBtn.textContent = 'Delete';
 
+    // change to only append new objects if they dont already exist or just redo messageContainer each time
     div.appendChild(title);
     div.appendChild(messageText);
     div.appendChild(deleteBtn);
@@ -34,6 +39,7 @@ const displayMessages = (data) => {
     console.log(obj);
   });
 }
+
 
 const postForm = (body) => {
   return fetch('http://localhost:3000/message/post', {
@@ -51,6 +57,10 @@ const handleSubmit = (e) => {
 
   messageModal.close();
   postForm(body);
+  
+  fetchMessages('http://localhost:3000/messages').then(data => {
+    displayMessages(data);
+  });
 }
 
 messageForm.addEventListener('submit', handleSubmit);
@@ -63,4 +73,6 @@ closeModalBtn.addEventListener('click', () => {
   messageModal.close();
 });
 
-fetchMessages('http://localhost:3000/messages');
+fetchMessages('http://localhost:3000/messages').then(data => {
+  displayMessages(data);
+});
