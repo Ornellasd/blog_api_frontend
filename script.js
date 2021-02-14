@@ -49,6 +49,7 @@ const handleSubmit = (e) => {
   e.preventDefault();
   const body = JSON.stringify(Object.fromEntries(new FormData(e.target)));
 
+  messageModal.close();
   postForm(body);
 }
 

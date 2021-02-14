@@ -10,29 +10,33 @@
 
   <body>
     <button id="new-message-modal-btn" class="nes-btn is-success">New Post</button>
-    <!-- Redo dialog modal with example in nes css framework docs -->
-    <dialog id="newMessageDialog">
-      <form id="message-form">
-        <div class="nes-field">
-          <label for="message-user">Username:</label>
-          <input name="message-user" type="text" class="nes-input" />
-        </div>
-        <div class="nes-field">
-          <label for="message-title">Title:</label>
-          <input name="message-title" type="text" class="nes-input" />
-        </div>
-        <div class="nes-field">
-          <label for="text">Text:</label>
-          <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
-        </div>
-        <button type="submit" class="nes-btn is-primary" id="message-btn">Submit</button>
-        <button type="button" class="nes-btn is-error" id="close-dialog-btn">Close</button>
-      </form>
-    </dialog>
+    <!-- Dialog -->
+    <section>
+      <dialog class="nes-dialog is-rounded" id="newMessageDialog">
+        <form id="message-form" method="dialog">
+          <div class="nes-field">
+            <label for="message-user">Username:</label>
+            <input name="message-user" type="text" class="nes-input" />
+          </div>
+          <div class="nes-field">
+            <label for="message-title">Title:</label>
+            <input name="message-title" type="text" class="nes-input" />
+          </div>
+          <div class="nes-field">
+            <label for="text">Text:</label>
+            <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
+          </div>
+          <menu class="dialog-menu">
+            <button type="submit" class="nes-btn is-primary" id="message-btn">Submit</button>
+            <button type="button" class="nes-btn is-error" id="close-dialog-btn">Close</button>
+          </menu>
+        </form>
+      </dialog>
+    </section>
+    <!-- End Dialog -->
 
     <h1>Message Get Test</h1>
     <div class="container" id="message-container"></div>
     <script src="script.js"></script>
   </body>
-
 </html>
