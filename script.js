@@ -2,7 +2,7 @@ const messageModal = document.querySelector('#newMessageDialog');
 const messageForm = document.querySelector('#message-form');
 const newMessageModalBtn = document.querySelector('#new-message-modal-btn');
 const closeModalBtn = document.querySelector('#close-dialog-btn');
-let messageContainer = document.querySelector('#message-container');
+let messagesContainer = document.querySelector('#message-container');
 
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
@@ -13,36 +13,48 @@ async function fetchMessages(messagesEndpoint) {
 
 const displayMessages = (data) => {
   data.forEach(obj => {
-    const div = document.createElement('div');
+    const messageDiv = document.createElement('div');
     const title = document.createElement('p');
     const messageText = document.createElement('p');
-    const deleteBtn = document.createElement('a');
-
-    div.classList += 'nes-container with-title message-box';
+ 
+    messageDiv.classList += 'nes-container with-title message-box';
     title.classList += 'title';
-    deleteBtn.classList += 'nes-btn is-error is-small';
 
     title.textContent = obj['title'];
     messageText.textContent = obj['text'];
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.href = `http://localhost:3000/message/${obj._id}/delete`;
-
+   
     // change to only append new objects if they dont already exist or just redo messageContainer each time
-    div.appendChild(title);
-    div.appendChild(messageText);
-    div.appendChild(deleteBtn);
-    messageContainer.appendChild(div);
-
-    deleteBtn.addEventListener('click', () => {
-      console.log('delete ' + obj._id);
-    });
-
-    console.log(obj);
+    messageDiv.appendChild(title);
+    messageDiv.appendChild(messageText);
+   
+    createDeleteMessageBtnContainer(messageDiv);
+    messagesContainer.appendChild(messageDiv);
   });
 }
 
-const deleteMessage = () => {
+const createDeleteMessageBtnContainer = (messageDiv) => {
+  const deleteBtnContainer = document.createElement('div');
+  const deleteBtn = document.createElement('a');
+  const confirmBtn = document.createElement('a');
+  const cancelBtn = document.createElement('a');
 
+  deleteBtnContainer.classList = 'delete-btn-container';
+  deleteBtn.classList += 'nes-btn is-error is-small';
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.href = `http://localhost:3000/id/delete`;
+  confirmBtn.classList += 'nes-btn is-success is-small';
+  confirmBtn.textContent = 'Yes';
+  cancelBtn.classList += 'nes-btn is-error is-small';
+  cancelBtn.textContent = 'No';
+
+  deleteBtnContainer.appendChild(deleteBtn);
+  deleteBtnContainer.appendChild(confirmBtn);
+  deleteBtnContainer.appendChild(cancelBtn);
+  messageDiv.appendChild(deleteBtnContainer);  
+}
+
+const deleteMessage = (id) => {
+  console.log(id);
 }
 
 const postForm = (body) => {
