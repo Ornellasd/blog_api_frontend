@@ -1,10 +1,8 @@
+const messageModal = document.querySelector('#newMessageDialog');
 const messageForm = document.querySelector('#message-form');
-
+const newMessageModalBtn = document.querySelector('#new-message-modal-btn');
+const closeModalBtn = document.querySelector('#close-dialog-btn');
 let messageContainer = document.querySelector('#message-container');
-
-function openNewMessageModal() { 
-  document.querySelector('#new-message-form').showModal(); 
-} 
 
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
@@ -50,5 +48,14 @@ const handleSubmit = (e) => {
   postForm(body);
 }
 
-fetchMessages('http://localhost:3000/messages');
 messageForm.addEventListener('submit', handleSubmit);
+
+newMessageModalBtn.addEventListener('click', () => {
+  messageModal.showModal();
+});
+
+closeModalBtn.addEventListener('click', () => {
+  messageModal.close();
+});
+
+fetchMessages('http://localhost:3000/messages');
