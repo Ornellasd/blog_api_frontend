@@ -6,6 +6,10 @@ body {
   margin-bottom: 10px;
 }
 
+.is-small {
+  font-size: 10px;
+}
+
 #message-form button {
   margin-top: 10px;
 }

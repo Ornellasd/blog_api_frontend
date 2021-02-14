@@ -16,15 +16,19 @@ const displayMessages = (data) => {
     const div = document.createElement('div');
     const title = document.createElement('p');
     const messageText = document.createElement('p');
+    const deleteBtn = document.createElement('button');
 
     div.classList += 'nes-container with-title message-box';
     title.classList += 'title';
+    deleteBtn.classList += 'nes-btn is-error is-small';
 
     title.textContent = obj['title'];
     messageText.textContent = obj['text'];
+    deleteBtn.textContent = 'Delete';
 
     div.appendChild(title);
     div.appendChild(messageText);
+    div.appendChild(deleteBtn);
     messageContainer.appendChild(div);
 
     console.log(obj);
