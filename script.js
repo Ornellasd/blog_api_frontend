@@ -16,25 +16,25 @@ const displayMessages = (data) => {
 
   data.forEach(obj => {
     const messageMarkup = 
-      `<div class="nes-container with-title message-box" id="message-${messageNum}>
-        <p class="title">${obj.title}</p>
-        <p class=>${obj.text}</p>
-        <a href="" class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
-        <div id="confirm-controls-${messageNum}">
-          <a href="http://localhost:3000/message/${obj._id}/delete" class="nes-btn is-success is-small">Yes</a>
-          <a href="" class="nes-btn is-error is-small">No</a>
-        </div>
-      </div>`;
+      `<div class="nes-container with-title message-box" id="message-${messageNum}">
+         <p class="title">${obj.title}</p>
+         <p>${obj.text}</p>
+         <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
+
+         <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
+           <a href="http://localhost:3000/message/${obj._id}/delete" class="nes-btn is-success is-small">Yes</a>
+           <a href="" class="nes-btn is-error is-small">No</a>
+         </div>
+       </div>`;
    
     messagesContainer.insertAdjacentHTML('beforeend', messageMarkup);
-    // change to only append new objects if they dont already exist or just redo messageContainer each time
-  
+    
+    document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
+      e.target.style.display = 'none';
+    });
+    
     messageNum++;
   });
-}
-
-const deleteBtnContainerToggle = () => {
-
 }
 
 const deleteMessage = (id) => {
@@ -76,3 +76,4 @@ closeModalBtn.addEventListener('click', () => {
 fetchMessages('http://localhost:3000/messages').then(data => {
   displayMessages(data);
 });
+
