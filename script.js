@@ -28,9 +28,12 @@ const displayMessages = (data) => {
        </div>`;
    
     messagesContainer.insertAdjacentHTML('beforeend', messageMarkup);
+
+    const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
     
     document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
       e.target.style.display = 'none';
+      confirmControlsContainer.style.display = 'block';
     });
     
     messageNum++;
