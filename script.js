@@ -27,30 +27,28 @@ const createMessageMarkup = (messageObj, messageNum) => {
    return messageMarkup;
 }
 
+const createDeleteMessageControls = (messageNum) => {
+  const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
+
+  document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
+    e.target.style.display = 'none';
+    confirmControlsContainer.style.display = 'block';
+  });
+
+  document.querySelector(`#delete-confirm-${messageNum}`).addEventListener('click', () => {
+    fetch('http://localhost:3000/message/${obj._id}/delete');
+    fetchMessages('http://localhost:3000/messages').then(data => {
+      displayMessages(data);
+    });
+  });
+}
+
 const displayMessages = (data) => {
   let messageNum = 1;
 
   data.forEach(obj => {
-    console.log(createMessageMarkup(obj, messageNum));
-
-    //messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj. messageNum));
     messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj, messageNum));
-
-    const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
-    
-    document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
-      e.target.style.display = 'none';
-      confirmControlsContainer.style.display = 'block';
-    });
-
-    document.querySelector(`#delete-confirm-${messageNum}`).addEventListener('click', () => {
-      console.log('derp');
-      fetch('http://localhost:3000/message/${obj._id}/delete');
-      fetchMessages('http://localhost:3000/messages').then(data => {
-        displayMessages(data);
-      });
-    });
-    
+    createDeleteMessageControls(messageNum);    
     messageNum++;
   });
 }
