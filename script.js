@@ -11,23 +11,30 @@ async function fetchMessages(messagesEndpoint) {
   return data;
 }
 
+const createMessageMarkup = (messageObj, messageNum) => {
+  const messageMarkup = 
+  `<div class="nes-container with-title message-box" id="message-${messageNum}">
+     <p class="title">${messageObj.title}</p>
+     <p>${messageObj.text}</p>
+     <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
+     <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
+       <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yay</button>
+       <a href="http://localhost:3000/message/${messageObj._id}/delete" class="nes-btn is-success is-small">Yes</a>
+       <a class="nes-btn is-error is-small">No</a>
+     </div>
+   </div>`;
+
+   return messageMarkup;
+}
+
 const displayMessages = (data) => {
   let messageNum = 1;
 
   data.forEach(obj => {
-    const messageMarkup = 
-      `<div class="nes-container with-title message-box" id="message-${messageNum}">
-         <p class="title">${obj.title}</p>
-         <p>${obj.text}</p>
-         <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
+    console.log(createMessageMarkup(obj, messageNum));
 
-         <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-           <a href="http://localhost:3000/message/${obj._id}/delete" class="nes-btn is-success is-small">Yes</a>
-           <a href="" class="nes-btn is-error is-small">No</a>
-         </div>
-       </div>`;
-   
-    messagesContainer.insertAdjacentHTML('beforeend', messageMarkup);
+    //messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj. messageNum));
+    messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj, messageNum));
 
     const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
     
@@ -35,13 +42,21 @@ const displayMessages = (data) => {
       e.target.style.display = 'none';
       confirmControlsContainer.style.display = 'block';
     });
+
+    document.querySelector(`#delete-confirm-${messageNum}`).addEventListener('click', () => {
+      console.log('derp');
+      fetch('http://localhost:3000/message/${obj._id}/delete');
+      fetchMessages('http://localhost:3000/messages').then(data => {
+        displayMessages(data);
+      });
+    });
     
     messageNum++;
   });
 }
 
-const deleteMessage = (id) => {
-  console.log(id);
+const deleteMessage = () => {
+
 }
 
 const postForm = (body) => {
