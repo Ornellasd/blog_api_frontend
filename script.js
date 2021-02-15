@@ -15,53 +15,22 @@ const displayMessages = (data) => {
   let messageNum = 1;
 
   data.forEach(obj => {
-    const messageDiv = document.createElement('div');
-    const title = document.createElement('p');
-    const messageText = document.createElement('p');
- 
-    messageDiv.classList += 'nes-container with-title message-box';
-    messageDiv.id = `message-${messageNum}`;
-    title.classList += 'title';
-
-    title.textContent = obj['title'];
-    messageText.textContent = obj['text'];
+    const messageMarkup = 
+      `<div class="nes-container with-title message-box" id="message-${messageNum}>
+        <p class="title">${obj.title}</p>
+        <p class=>${obj.text}</p>
+        <a href="" class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
+        <div id="confirm-controls-${messageNum}">
+          <a href="http://localhost:3000/message/${obj._id}/delete" class="nes-btn is-success is-small">Yes</a>
+          <a href="" class="nes-btn is-error is-small">No</a>
+        </div>
+      </div>`;
    
+    messagesContainer.insertAdjacentHTML('beforeend', messageMarkup);
     // change to only append new objects if they dont already exist or just redo messageContainer each time
-    messageDiv.appendChild(title);
-    messageDiv.appendChild(messageText);
-   
-    createDeleteMessageBtnContainer(messageDiv, messageNum);
-    messagesContainer.appendChild(messageDiv);
-
+  
     messageNum++;
   });
-}
-
-const createDeleteMessageBtnContainer = (messageDiv, messageNum) => {
-  const deleteBtnContainer = document.createElement('div');
-  const confirmBtnsContainer = document.createElement('div');
-  const deleteBtn = document.createElement('a');
-  const confirmBtn = document.createElement('a');
-  const cancelBtn = document.createElement('a');
-
-  deleteBtnContainer.classList = 'delete-btn-container';
-  confirmBtnsContainer.classList += 'confirm-container';
-  confirmBtnsContainer.id = `confirm-${messageNum}`;
-  //confirmBtnsContainer.style.display = 'none';
-  deleteBtn.classList += 'nes-btn is-error is-small';
-  deleteBtn.textContent = 'Delete';
-  deleteBtn.href = `http://localhost:3000/id/delete`;
-  confirmBtn.classList += 'nes-btn is-success is-small';
-  confirmBtn.textContent = 'Yes';
-  cancelBtn.classList += 'nes-btn is-error is-small';
-  cancelBtn.textContent = 'No';
-
-  confirmBtnsContainer.appendChild(confirmBtn);
-  confirmBtnsContainer.appendChild(cancelBtn);
-
-  deleteBtnContainer.appendChild(deleteBtn);
-  deleteBtnContainer.appendChild(confirmBtnsContainer);
-  messageDiv.appendChild(deleteBtnContainer);  
 }
 
 const deleteBtnContainerToggle = () => {
