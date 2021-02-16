@@ -16,17 +16,17 @@ const createMessageMarkup = (messageObj, messageNum) => {
   `<div class="nes-container with-title message-box" id="message-${messageNum}">
      <p class="title">${messageObj.title}</p>
      <p>${messageObj.text}</p>
-     <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
+     <button class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</button>
      <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-       <a class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</a>
-       <a class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</a>
+       <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</button>
+       <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</button>
      </div>
    </div>`;
 
    return messageMarkup;
 }
 
-const createDeleteMessageControls = (messageNum) => {
+const createDeleteMessageControls = (id, messageNum) => {
   const commenceDeleteBtn = document.querySelector(`#delete-message-${messageNum}`);
   const confirmControlsContainer = document.querySelector(`#confirm-controls-${messageNum}`);
   const confirmDeleteBtn = document.querySelector(`#delete-confirm-${messageNum}`);
@@ -37,11 +37,11 @@ const createDeleteMessageControls = (messageNum) => {
   });
   
   confirmDeleteBtn.addEventListener('click', () => {
-    console.log('delete');
+    handleDelete(id)
+    // update message container with fetch(function) 
   });
 
   cancelDeleteBtn.addEventListener('click', () => {
-    console.log('whoops');
     deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer);
   });
 }
@@ -56,8 +56,8 @@ const deleteControlsToggle = (commenceDeleteBtn, confirmControlsContainer) => {
   }
 }
 
-const handleDelete = (deleteBtn, container) => {
- 
+const handleDelete = (id) => {
+  fetch(`http://localhost:3000/message/${id}/delete`);
 }
 
 const displayMessages = (data) => {
@@ -65,7 +65,7 @@ const displayMessages = (data) => {
 
   data.forEach(obj => {
     messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj, messageNum));
-    createDeleteMessageControls(messageNum);    
+    createDeleteMessageControls(obj._id, messageNum);    
     messageNum++;
   });
 }
