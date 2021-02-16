@@ -18,8 +18,7 @@ const createMessageMarkup = (messageObj, messageNum) => {
      <p>${messageObj.text}</p>
      <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
      <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-       <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yay</button>
-       <a href="http://localhost:3000/message/${messageObj._id}/delete" class="nes-btn is-success is-small">Yes</a>
+       <a class="nes-btn is-success is-small">Yes</a>
        <a class="nes-btn is-error is-small">No</a>
      </div>
    </div>`;
@@ -29,17 +28,28 @@ const createMessageMarkup = (messageObj, messageNum) => {
 
 const createDeleteMessageControls = (messageNum) => {
   const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
+  const confirmDeleteBtn = document.querySelector(`#delete-confirm-${messageNum}`);
 
+  // When Delete button is clicked, hide delete button target and show confirm controls
   document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
-    e.target.style.display = 'none';
-    confirmControlsContainer.style.display = 'block';
+    deleteControlsToggle(e.target, confirmControlsContainer);
+    handleDelete(confirmControlsContainer);
   });
+}
 
-  document.querySelector(`#delete-confirm-${messageNum}`).addEventListener('click', () => {
-    fetch('http://localhost:3000/message/${obj._id}/delete');
-    fetchMessages('http://localhost:3000/messages').then(data => {
-      displayMessages(data);
-    });
+const deleteControlsToggle = (deleteBtn, confirmControlsContainer) => {
+  deleteBtn.style.display = 'none';
+  confirmControlsContainer.style.display = 'block';
+}
+
+const handleDelete = (container) => {
+  container.addEventListener('click', (e) => {
+    console.log(e.target.text)
+    if(e.target.text === 'Yes') {
+      console.log('DESTROYING');
+    } else {
+      container.style.display = 'none';
+    }
   });
 }
 
@@ -53,9 +63,7 @@ const displayMessages = (data) => {
   });
 }
 
-const deleteMessage = () => {
 
-}
 
 const postForm = (body) => {
   return fetch('http://localhost:3000/message/post', {
