@@ -2,7 +2,7 @@ const messageModal = document.querySelector('#newMessageDialog');
 const messageForm = document.querySelector('#message-form');
 const newMessageModalBtn = document.querySelector('#new-message-modal-btn');
 const closeModalBtn = document.querySelector('#close-dialog-btn');
-let messageContainer = document.querySelector('#message-container');
+const messagesContainer = document.querySelector('#message-container');
 
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
@@ -10,36 +10,65 @@ async function fetchMessages(messagesEndpoint) {
 
   return data;
 }
-/*
-const displayMessages = (data) => {
-  console.log(data);
+
+const createMessageMarkup = (messageObj, messageNum) => {
+  const messageMarkup = 
+  `<div class="nes-container with-title message-box" id="message-${messageNum}">
+     <p class="title">${messageObj.title}</p>
+     <p>${messageObj.text}</p>
+     <button class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</button>
+     <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
+       <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</button>
+       <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</button>
+     </div>
+   </div>`;
+
+   return messageMarkup;
 }
-*/
-const displayMessages = (data) => {
-  data.forEach(obj => {
-    const div = document.createElement('div');
-    const title = document.createElement('p');
-    const messageText = document.createElement('p');
-    const deleteBtn = document.createElement('button');
 
-    div.classList += 'nes-container with-title message-box';
-    title.classList += 'title';
-    deleteBtn.classList += 'nes-btn is-error is-small';
+const createDeleteMessageControls = (id, messageNum) => {
+  const commenceDeleteBtn = document.querySelector(`#delete-message-${messageNum}`);
+  const confirmControlsContainer = document.querySelector(`#confirm-controls-${messageNum}`);
+  const confirmDeleteBtn = document.querySelector(`#delete-confirm-${messageNum}`);
+  const cancelDeleteBtn = document.querySelector(`#delete-cancel-${messageNum}`);
+  
+  commenceDeleteBtn.addEventListener('click', () => {
+    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer)
+  });
+  
+  confirmDeleteBtn.addEventListener('click', () => {
+    handleDelete(id)
+    // update message container with fetch(function) 
+  });
 
-    title.textContent = obj['title'];
-    messageText.textContent = obj['text'];
-    deleteBtn.textContent = 'Delete';
-
-    // change to only append new objects if they dont already exist or just redo messageContainer each time
-    div.appendChild(title);
-    div.appendChild(messageText);
-    div.appendChild(deleteBtn);
-    messageContainer.appendChild(div);
-
-    console.log(obj);
+  cancelDeleteBtn.addEventListener('click', () => {
+    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer);
   });
 }
 
+const deleteControlsToggle = (commenceDeleteBtn, confirmControlsContainer) => {
+  if(confirmControlsContainer.style.display !== 'block') {
+    confirmControlsContainer.style.display = 'block';
+    commenceDeleteBtn.style.display = 'none';
+  } else {
+    confirmControlsContainer.style.display = 'none';
+    commenceDeleteBtn.style.display = 'inline-block';
+  }
+}
+
+const handleDelete = (id) => {
+  fetch(`http://localhost:3000/message/${id}/delete`);
+}
+
+const displayMessages = (data) => {
+  let messageNum = 1;
+
+  data.forEach(obj => {
+    messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj, messageNum));
+    createDeleteMessageControls(obj._id, messageNum);    
+    messageNum++;
+  });
+}
 
 const postForm = (body) => {
   return fetch('http://localhost:3000/message/post', {
@@ -76,3 +105,4 @@ closeModalBtn.addEventListener('click', () => {
 fetchMessages('http://localhost:3000/messages').then(data => {
   displayMessages(data);
 });
+
