@@ -2,7 +2,7 @@ const messageModal = document.querySelector('#newMessageDialog');
 const messageForm = document.querySelector('#message-form');
 const newMessageModalBtn = document.querySelector('#new-message-modal-btn');
 const closeModalBtn = document.querySelector('#close-dialog-btn');
-let messagesContainer = document.querySelector('#message-container');
+const messagesContainer = document.querySelector('#message-container');
 
 async function fetchMessages(messagesEndpoint) {
   const response = await fetch(messagesEndpoint);
@@ -32,23 +32,30 @@ const createDeleteMessageControls = (messageNum) => {
 
   // When Delete button is clicked, hide delete button target and show confirm controls
   document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
-    deleteControlsToggle(e.target, confirmControlsContainer);
-    handleDelete(confirmControlsContainer);
+    handleDelete(e.target, confirmControlsContainer);
   });
 }
 
 const deleteControlsToggle = (deleteBtn, confirmControlsContainer) => {
-  deleteBtn.style.display = 'none';
-  confirmControlsContainer.style.display = 'block';
+  if(confirmControlsContainer.style.display !== 'block') {
+    confirmControlsContainer.style.display = 'block';
+    deleteBtn.style.display = 'none';
+  } else {
+    confirmControlsContainer.style.display = 'none';
+    deleteBtn.style.display = 'block';
+  }
 }
 
-const handleDelete = (container) => {
+const handleDelete = (deleteBtn, container) => {
+  deleteControlsToggle(deleteBtn, container);
+
   container.addEventListener('click', (e) => {
     console.log(e.target.text)
     if(e.target.text === 'Yes') {
       console.log('DESTROYING');
     } else {
-      container.style.display = 'none';
+      // how to target delete button from here?
+      deleteControlsToggle(deleteBtn, container);
     }
   });
 }
