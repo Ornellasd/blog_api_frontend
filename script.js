@@ -18,8 +18,8 @@ const createMessageMarkup = (messageObj, messageNum) => {
      <p>${messageObj.text}</p>
      <a class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</a>
      <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-       <a class="nes-btn is-success is-small">Yes</a>
-       <a class="nes-btn is-error is-small">No</a>
+       <a class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</a>
+       <a class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</a>
      </div>
    </div>`;
 
@@ -27,37 +27,37 @@ const createMessageMarkup = (messageObj, messageNum) => {
 }
 
 const createDeleteMessageControls = (messageNum) => {
-  const confirmControlsContainer = document.querySelector('#confirm-controls-' + messageNum);
+  const commenceDeleteBtn = document.querySelector(`#delete-message-${messageNum}`);
+  const confirmControlsContainer = document.querySelector(`#confirm-controls-${messageNum}`);
   const confirmDeleteBtn = document.querySelector(`#delete-confirm-${messageNum}`);
+  const cancelDeleteBtn = document.querySelector(`#delete-cancel-${messageNum}`);
+  
+  commenceDeleteBtn.addEventListener('click', () => {
+    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer)
+  });
+  
+  confirmDeleteBtn.addEventListener('click', () => {
+    console.log('delete');
+  });
 
-  // When Delete button is clicked, hide delete button target and show confirm controls
-  document.querySelector(`#delete-message-${messageNum}`).addEventListener('click', (e) => {
-    handleDelete(e.target, confirmControlsContainer);
+  cancelDeleteBtn.addEventListener('click', () => {
+    console.log('whoops');
+    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer);
   });
 }
 
-const deleteControlsToggle = (deleteBtn, confirmControlsContainer) => {
+const deleteControlsToggle = (commenceDeleteBtn, confirmControlsContainer) => {
   if(confirmControlsContainer.style.display !== 'block') {
     confirmControlsContainer.style.display = 'block';
-    deleteBtn.style.display = 'none';
+    commenceDeleteBtn.style.display = 'none';
   } else {
     confirmControlsContainer.style.display = 'none';
-    deleteBtn.style.display = 'block';
+    commenceDeleteBtn.style.display = 'inline-block';
   }
 }
 
 const handleDelete = (deleteBtn, container) => {
-  deleteControlsToggle(deleteBtn, container);
-
-  container.addEventListener('click', (e) => {
-    console.log(e.target.text)
-    if(e.target.text === 'Yes') {
-      console.log('DESTROYING');
-    } else {
-      // how to target delete button from here?
-      deleteControlsToggle(deleteBtn, container);
-    }
-  });
+ 
 }
 
 const displayMessages = (data) => {
@@ -69,8 +69,6 @@ const displayMessages = (data) => {
     messageNum++;
   });
 }
-
-
 
 const postForm = (body) => {
   return fetch('http://localhost:3000/message/post', {
