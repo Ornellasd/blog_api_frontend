@@ -13,15 +13,15 @@ async function fetchMessages(messagesEndpoint) {
 
 const createMessageMarkup = (messageObj, messageNum) => {
   const messageMarkup = 
-  `<div class="nes-container with-title message-box" id="message-${messageNum}">
-     <p class="title">${messageObj.title}</p>
-     <p>${messageObj.text}</p>
-     <button class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</button>
-     <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-       <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</button>
-       <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</button>
-     </div>
-   </div>`;
+    `<div class="nes-container with-title message-box" id="message-${messageNum}">
+      <p class="title">${messageObj.title}</p>
+      <p>${messageObj.text}</p>
+      <button class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</button>
+      <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
+        <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</button>
+        <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</button>
+      </div>
+    </div>`;
 
    return messageMarkup;
 }
@@ -57,17 +57,22 @@ const deleteControlsToggle = (commenceDeleteBtn, confirmControlsContainer) => {
 }
 
 const handleDelete = (id) => {
-  fetch(`http://localhost:3000/message/${id}/delete`);
+  fetch(`http://localhost:3000/message/${id}/delete`)
+    .then(fetchMessages('http://localhost:3000/messages').then(data => {
+      displayMessages(data);
+    }));
 }
 
 const displayMessages = (data) => {
   let messageNum = 1;
+  let messagesMarkup = '';
 
   data.forEach(obj => {
-    messagesContainer.insertAdjacentHTML('beforeend', createMessageMarkup(obj, messageNum));
-    createDeleteMessageControls(obj._id, messageNum);    
+    messagesMarkup += createMessageMarkup(obj, messageNum);   
     messageNum++;
   });
+
+  messagesContainer.innerHTML = messagesMarkup;
 }
 
 const postForm = (body) => {
@@ -88,6 +93,7 @@ const handleSubmit = (e) => {
   postForm(body);
   
   fetchMessages('http://localhost:3000/messages').then(data => {
+    console.log('submitting....')
     displayMessages(data);
   });
 }
