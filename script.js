@@ -71,7 +71,9 @@ const handleSubmit = (e) => {
 
   messageModal.close();
   postForm(body);
-  
+
+  document.querySelector('#message-form').reset();
+   
   fetchMessages('http://localhost:3000/messages').then(data => {
     displayMessages(data);
   });
