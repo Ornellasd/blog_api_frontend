@@ -16,34 +16,14 @@ const createMessageMarkup = (messageObj, messageNum) => {
     `<div class="nes-container with-title message-box" id="message-${messageNum}">
       <p class="title">${messageObj.title}</p>
       <p>${messageObj.text}</p>
-      <button class="nes-btn is-error is-small" id="delete-message-${messageNum}">Delete</button>
+      <button class="nes-btn is-error is-small" id="delete-message-${messageNum}" onClick="deleteControlsToggle(document.querySelector('#delete-message-${messageNum}'), document.querySelector('#confirm-controls-${messageNum}'))">Delete</button>
       <div class="confirm-controls-container" id="confirm-controls-${messageNum}">
-        <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}">Yes</button>
-        <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}">No</button>
+        <button class="nes-btn is-success is-small" id="delete-confirm-${messageNum}" onClick="handleDelete('${messageObj._id}')">Yes</button>
+        <button class="nes-btn is-error is-small" id="delete-cancel-${messageNum}" onClick="deleteControlsToggle(document.querySelector('#delete-message-${messageNum}'), document.querySelector('#confirm-controls-${messageNum}'))">No</button>
       </div>
     </div>`;
 
    return messageMarkup;
-}
-
-const createDeleteMessageControls = (id, messageNum) => {
-  const commenceDeleteBtn = document.querySelector(`#delete-message-${messageNum}`);
-  const confirmControlsContainer = document.querySelector(`#confirm-controls-${messageNum}`);
-  const confirmDeleteBtn = document.querySelector(`#delete-confirm-${messageNum}`);
-  const cancelDeleteBtn = document.querySelector(`#delete-cancel-${messageNum}`);
-  
-  commenceDeleteBtn.addEventListener('click', () => {
-    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer)
-  });
-  
-  confirmDeleteBtn.addEventListener('click', () => {
-    handleDelete(id)
-    // update message container with fetch(function) 
-  });
-
-  cancelDeleteBtn.addEventListener('click', () => {
-    deleteControlsToggle(commenceDeleteBtn, confirmControlsContainer);
-  });
 }
 
 const deleteControlsToggle = (commenceDeleteBtn, confirmControlsContainer) => {
@@ -61,14 +41,14 @@ const handleDelete = (id) => {
     .then(fetchMessages('http://localhost:3000/messages').then(data => {
       displayMessages(data);
     }));
-}
+  }
 
 const displayMessages = (data) => {
   let messageNum = 1;
   let messagesMarkup = '';
 
   data.forEach(obj => {
-    messagesMarkup += createMessageMarkup(obj, messageNum);   
+    messagesMarkup += createMessageMarkup(obj, messageNum);  
     messageNum++;
   });
 
@@ -93,7 +73,6 @@ const handleSubmit = (e) => {
   postForm(body);
   
   fetchMessages('http://localhost:3000/messages').then(data => {
-    console.log('submitting....')
     displayMessages(data);
   });
 }
