@@ -12,8 +12,11 @@
   <body>
     <div class="container">
       <main class="main-content">
-        <button id="new-message-modal-btn" class="nes-btn is-success">New Post</button>
-        <button id="login-modal-btn" class="nes-btn is-primary">Log In</button>
+        <div style="float: right">
+          <button id="new-message-modal-btn" class="nes-btn is-success">New Post</button>
+          <button id="login-modal-btn" class="nes-btn is-primary">Log In</button>
+        </div>
+        
         <!-- Post Dialog -->
         <section>
           <dialog class="nes-dialog is-rounded" id="newMessageDialog">
@@ -49,16 +52,42 @@
               </div>
               <div class="nes-field">
                 <label for="message-title">Password:</label>
-                <input name="message-title" type="text" class="nes-input" />
+                <input name="message-title" type="password" class="nes-input" />
               </div>
               <menu class="dialog-menu">
                 <button type="submit" class="nes-btn is-primary" id="">Submit</button>
                 <button type="button" class="nes-btn is-error" id="close-dialog-btn2">Close</button>
               </menu>
+              <a href="" id="new-user-link">New User?</a>
             </form>
           </dialog>
         </section>
         <!-- Log In Dialog-->
+
+        <!-- New User Dialog -->
+        <section>
+          <dialog class="nes-dialog is-rounded" id="newUserDialog">
+            <form id="message-form" method="dialog">
+              <div class="nes-field">
+                <label for="message-user">Username:</label>
+                <input name="message-user" type="text" class="nes-input" />
+              </div>
+              <div class="nes-field">
+                <label for="message-title">Password:</label>
+                <input name="message-title" type="password" class="nes-input" />
+              </div>
+              <div class="nes-field">
+                <label for="message-title">Retype Password:</label>
+                <input name="message-title" type="password" class="nes-input" />
+              </div>
+              <menu class="dialog-menu">
+                <button type="submit" class="nes-btn is-primary" id="">Submit</button>
+                <button type="button" class="nes-btn is-error" id="close-dialog-btn3">Close</button>
+              </menu>
+            </form>
+          </dialog>
+        </section>
+        <!-- New User Dialog-->
 
         <h1>Blog API</h1>
         <div class="container" id="message-container"></div>

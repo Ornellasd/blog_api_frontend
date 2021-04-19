@@ -2,11 +2,14 @@ const messageModal = document.querySelector('#newMessageDialog');
 const newMessageModalBtn = document.querySelector('#new-message-modal-btn');
 const loginModal = document.querySelector('#loginDialog');
 const loginModalBtn = document.querySelector('#login-modal-btn');
+const newUserModal = document.querySelector('#newUserDialog');
+const newUserLink = document.querySelector('#new-user-link');
 
 const messageForm = document.querySelector('#message-form');
 
 const closeModalBtn = document.querySelector('#close-dialog-btn1');
 const closeModalBtn2 = document.querySelector('#close-dialog-btn2');
+const closeModalBtn3 = document.querySelector('#close-dialog-btn3');
 const messagesContainer = document.querySelector('#message-container');
 
 async function fetchMessages(messagesEndpoint) {
@@ -94,6 +97,11 @@ loginModalBtn.addEventListener('click', () => {
   loginModal.showModal();
 });
 
+newUserLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  loginModal.close();
+  newUserModal.showModal();
+})
 // combine these listeners with loop
 closeModalBtn.addEventListener('click', () => {
   messageModal.close();
@@ -101,6 +109,10 @@ closeModalBtn.addEventListener('click', () => {
 
 closeModalBtn2.addEventListener('click', () => {
   loginModal.close();
+});
+
+closeModalBtn3.addEventListener('click', () => {
+  newUserModal.close();
 });
 //
 
