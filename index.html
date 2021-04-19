@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <title></title>
@@ -9,34 +10,62 @@
   </head>
 
   <body>
-    <button id="new-message-modal-btn" class="nes-btn is-success">New Post</button>
-    <!-- Dialog -->
-    <section>
-      <dialog class="nes-dialog is-rounded" id="newMessageDialog">
-        <form id="message-form" method="dialog">
-          <div class="nes-field">
-            <label for="message-user">Username:</label>
-            <input name="message-user" type="text" class="nes-input" />
-          </div>
-          <div class="nes-field">
-            <label for="message-title">Title:</label>
-            <input name="message-title" type="text" class="nes-input" />
-          </div>
-          <div class="nes-field">
-            <label for="text">Text:</label>
-            <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
-          </div>
-          <menu class="dialog-menu">
-            <button type="submit" class="nes-btn is-primary" id="message-btn">Submit</button>
-            <button type="button" class="nes-btn is-error" id="close-dialog-btn">Close</button>
-          </menu>
-        </form>
-      </dialog>
-    </section>
-    <!-- End Dialog -->
+    <div class="container">
+      <main class="main-content">
+        <button id="new-message-modal-btn" class="nes-btn is-success">New Post</button>
+        <button id="login-modal-btn" class="nes-btn is-primary">Log In</button>
+        <!-- Post Dialog -->
+        <section>
+          <dialog class="nes-dialog is-rounded" id="newMessageDialog">
+            <form id="message-form" method="dialog">
+              <div class="nes-field">
+                <label for="message-user">Username:</label>
+                <input name="message-user" type="text" class="nes-input" />
+              </div>
+              <div class="nes-field">
+                <label for="message-title">Title:</label>
+                <input name="message-title" type="text" class="nes-input" />
+              </div>
+              <div class="nes-field">
+                <label for="text">Text:</label>
+                <textarea name="message-text" id="message-text" class="nes-textarea"></textarea>
+              </div>
+              <menu class="dialog-menu">
+                <button type="submit" class="nes-btn is-primary" id="message-btn">Submit</button>
+                <button type="button" class="nes-btn is-error" id="close-dialog-btn1">Close</button>
+              </menu>
+            </form>
+          </dialog>
+        </section>
+        <!-- Post Dialog -->
 
-    <h1>Message Get Test</h1>
-    <div class="container" id="message-container"></div>
+        <!-- Log In Dialog -->
+        <section>
+          <dialog class="nes-dialog is-rounded" id="loginDialog">
+            <form id="message-form" method="dialog">
+              <div class="nes-field">
+                <label for="message-user">Username:</label>
+                <input name="message-user" type="text" class="nes-input" />
+              </div>
+              <div class="nes-field">
+                <label for="message-title">Password:</label>
+                <input name="message-title" type="text" class="nes-input" />
+              </div>
+              <menu class="dialog-menu">
+                <button type="submit" class="nes-btn is-primary" id="">Submit</button>
+                <button type="button" class="nes-btn is-error" id="close-dialog-btn2">Close</button>
+              </menu>
+            </form>
+          </dialog>
+        </section>
+        <!-- Log In Dialog-->
+
+        <h1>Blog API</h1>
+        <div class="container" id="message-container"></div>
+      </main>
+    </div>
+  
     <script src="script.js"></script>
   </body>
+
 </html>
