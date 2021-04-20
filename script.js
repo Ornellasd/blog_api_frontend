@@ -6,6 +6,8 @@ const newUserModal = document.querySelector('#newUserDialog');
 const newUserLink = document.querySelector('#new-user-link');
 
 const messageForm = document.querySelector('#message-form');
+const loginForm = document.querySelector('#login-form');
+const signUpForm = document.querySelector('#signup-form');
 
 const closeModalBtn = document.querySelector('#close-dialog-btn1');
 const closeModalBtn2 = document.querySelector('#close-dialog-btn2');
@@ -80,7 +82,8 @@ const handleSubmit = (e) => {
   messageModal.close();
   postForm(body);
 
-  document.querySelector('#message-form').reset();
+  //document.querySelector('#message-form').reset();
+  messageForm.reset();
    
   fetchMessages('http://localhost:3000/messages').then(data => {
     displayMessages(data);
@@ -88,6 +91,22 @@ const handleSubmit = (e) => {
 }
 
 messageForm.addEventListener('submit', handleSubmit);
+
+const handleUserSignup = (e) => {
+  e.preventDefault();
+  const body = JSON.stringify(Object.fromEntries(new FormData(e.target)));
+  newUserModal.close();
+
+  return fetch('http://localhost:3000/create-user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body
+  })
+};
+
+signUpForm.addEventListener('submit', handleUserSignup);
 
 newMessageModalBtn.addEventListener('click', () => {
   messageModal.showModal();
