@@ -82,7 +82,6 @@ const handleSubmit = (e) => {
   messageModal.close();
   postForm(body);
 
-  //document.querySelector('#message-form').reset();
   messageForm.reset();
    
   fetchMessages('http://localhost:3000/messages').then(data => {
@@ -97,7 +96,7 @@ const handleUserSignup = (e) => {
   const body = JSON.stringify(Object.fromEntries(new FormData(e.target)));
   newUserModal.close();
 
-  return fetch('http://localhost:3000/create-user', {
+  return fetch('http://localhost:3000/sign-up', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -107,6 +106,22 @@ const handleUserSignup = (e) => {
 };
 
 signUpForm.addEventListener('submit', handleUserSignup);
+
+const handleUserLogin = (e) => {
+  e.preventDefault();
+  const body = JSON.stringify(Object.fromEntries(new FormData(e.target)));
+  loginModal.close();
+
+  return fetch('http://localhost:3000/sign-in', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body
+  })
+};
+
+loginForm.addEventListener('submit', handleUserLogin);
 
 newMessageModalBtn.addEventListener('click', () => {
   messageModal.showModal();
